@@ -18,4 +18,6 @@ fizz_num = 3
 buzz_num = 5
 repeat_num = 20
 
-(1..repeat_num).each { |num| puts fizz_buzz(num, fizz_num, buzz_num) }
+(1..repeat_num).each do |num|
+  puts fizz_buzz(num, fizz_num, buzz_num)
+end
