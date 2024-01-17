@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 require 'date'
 require 'optparse'
 
@@ -6,37 +7,24 @@ year = Date.today.year
 month = Date.today.month
 
 opt = OptionParser.new
-
-opt.on('-y [VAL]') {|y|
-if y 
-  year = y.to_i
-end
-}
-
-opt.on('-m [VAL]') {|m|
-if m 
-  month = m.to_i
-end
-}
-
+opt.on('-y [VAL]') {|y| year = y.to_i if y}
+opt.on('-m [VAL]') {|m| month = y.to_i if m}
 opt.parse!(ARGV)
 
-calendar = Date.new(year, month)
+first_day = Date.new(year, month)
+last_day = Date.new(year, month, -1)
 
-puts "#{calendar.month.to_s.rjust(7)}月 #{calendar.year.to_s}"
+puts "#{first_day.month.to_s.rjust(7)}月 #{first_day.year.to_s}"
 puts "日 月 火 水 木 金 土"
+print " " * (3 * first_day.wday - 1) unless first_day.sunday?
 
-if calendar.strftime('%a') != "Sun"
-    print  " " * (3 * calendar.wday - 1)
-end 
-
-while calendar.month == month
-  day_string = calendar.day.to_s.rjust(calendar.sunday? ? 2 : 3)
-  if  calendar.strftime('%a') == "Sat"
+(first_day..last_day).each do |date|
+  day_string = first_day.day.to_s.rjust(first_day.sunday? ? 2 : 3)
+  if  first_day.saturday?
     puts day_string
   else
     print day_string
   end
-  calendar += 1
+  first_day += 1
 end
 puts
