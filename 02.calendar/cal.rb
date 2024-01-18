@@ -8,7 +8,7 @@ month = Date.today.month
 
 opt = OptionParser.new
 opt.on('-y [VAL]') {|y| year = y.to_i if y}
-opt.on('-m [VAL]') {|m| month = y.to_i if m}
+opt.on('-m [VAL]') {|m| month = m.to_i if m}
 opt.parse!(ARGV)
 
 first_day = Date.new(year, month)
@@ -19,12 +19,8 @@ puts "日 月 火 水 木 金 土"
 print " " * (3 * first_day.wday - 1) unless first_day.sunday?
 
 (first_day..last_day).each do |date|
-  day_string = first_day.day.to_s.rjust(first_day.sunday? ? 2 : 3)
-  if  first_day.saturday?
-    puts day_string
-  else
-    print day_string
-  end
-  first_day += 1
+  day_string = date.day.to_s.rjust(date.sunday? ? 2 : 3)
+  print day_string
+  puts if date.saturday?
 end
 puts
