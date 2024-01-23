@@ -9,13 +9,7 @@ score = ARGV[0]
 scores = score.split(',')
 shots = []
 
-scores.each do |s|
-  shots << if s == 'X' # strike
-             10
-           else
-             s.to_i
-           end
-end
+shots = scores.map {|s| s == 'X' ?10 : s.to_i }
 
 point = 0
 is_first_shot = true
